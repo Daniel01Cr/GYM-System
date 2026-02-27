@@ -2,7 +2,7 @@
   "name": "gym-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "server.js",  
   "scripts": {
   "dev": "nodemon src/server.js",
   "start": "node src/server.js"
@@ -21,4 +21,5 @@
   "devDependencies": {
     "nodemon": "^3.1.11"
   }
+    
 }
