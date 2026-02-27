@@ -1,9 +1,14 @@
+const cron = require('node-cron');
 const express = require('express');
-const app = express();
-require('./config/db');
+const pool = require('./config/db');
+require('./cron/membresias.cron');
 
+const app = express();
+
+// Middleware para parsear JSON
 app.use(express.json());
 
+// Rutas
 const clientesRoutes = require('./routes/clientes.routes');
 const membresiasRoutes = require('./routes/membresias.routes');
 const clienteMembresiaRoutes = require('./routes/cliente-membresia.routes');
@@ -12,11 +17,11 @@ app.use('/cliente', clientesRoutes);
 app.use('/membresia', membresiasRoutes);
 app.use('/cliente-membresia', clienteMembresiaRoutes);
 
-app.listen(3000, () => {
-  console.log('Servidor corriendo en puerto 3000');
+const PORT = 3000;
+
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en puerto ${PORT}`);
 });
-
-
 
 /*
 
