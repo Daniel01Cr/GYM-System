@@ -1,7 +1,11 @@
 const express = require('express');
-const router = express.Router();
-const clienteMembresiaRoutes = require('../controllers/cliente-membresia.controller');
+const router  = express.Router();
+const clienteMembresiaController = require('../controllers/cliente-membresia.controller');
 
-router.post('/asignar', clienteMembresiaRoutes.asignarMembresia);
+// POST /cliente-membresia/asignar
+router.post('/asignar', clienteMembresiaController.asignarMembresia);
+
+// GET /cliente-membresia/estado/:id_cliente
+router.get('/estado/:id_cliente', clienteMembresiaController.getEstadoMembresia);
 
 module.exports = router;

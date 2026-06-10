@@ -24,22 +24,6 @@ exports.getClientesByID = async (req, res) => {
     }
 };
 
-exports.createCliente = async (req, res) => {
-    try {
-        const {nombre_cliente, primer_apellido_cliente, cedula_cliente, telefono_cliente, 
-        email_cliente, edad_cliente, peso_cliente, altura_cliente} = req.body;
-        const [rows] = await db.query(
-            'INSERT INTO CLIENTE (NOMBRE_CLIENTE, PRIMER_APELLIDO_CLIENTE, CEDULA_CLIENTE, TELEFONO_CLIENTE,' 
-            + 'EMAIL_CLIENTE, EDAD_CLIENTE, PESO_CLIENTE, ALTURA_CLIENTE) values (?,?,?,?,?,?,?,?)',
-            [nombre_cliente, primer_apellido_cliente, cedula_cliente, telefono_cliente, 
-                email_cliente, edad_cliente, peso_cliente, altura_cliente]
-        );
-        res.status(201).json({ message: 'Cliente CREADO', id: result.insertId });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-};
-
 //CREAR CLIENTE
 exports.createCliente = async (req, res) => {
     try {

@@ -1,33 +1,37 @@
-const cron = require('node-cron');
+require('dotenv').config();
 const express = require('express');
-const pool = require('./config/db');
-require('./cron/membresias.cron');
 
 const app = express();
 
-// Middleware para parsear JSON
+// ─── Middleware ──────────────────────────────────────────────────────────────
 app.use(express.json());
 
-// Rutas
-const clientesRoutes = require('./routes/clientes.routes');
-const membresiasRoutes = require('./routes/membresias.routes');
+// ─── Cron jobs ───────────────────────────────────────────────────────────────
+require('./cron/membresias.cron');
+
+// ─── Rutas ───────────────────────────────────────────────────────────────────
+const clientesRoutes         = require('./routes/clientes.routes');
+const membresiasRoutes       = require('./routes/membresias.routes');
 const clienteMembresiaRoutes = require('./routes/cliente-membresia.routes');
+const facturaRoutes          = require('./routes/factura.routes');
+const usuarioRoutes          = require('./routes/usuario.routes');
 
-app.use('/cliente', clientesRoutes);
-app.use('/membresia', membresiasRoutes);
+app.use('/cliente',           clientesRoutes);
+app.use('/membresia',         membresiasRoutes);
 app.use('/cliente-membresia', clienteMembresiaRoutes);
+app.use('/factura',           facturaRoutes);
+app.use('/usuario',           usuarioRoutes);
 
-const PORT = 3000;
+// ─── Arranque ────────────────────────────────────────────────────────────────
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en puerto ${PORT}`);
 });
 
 /*
-
 git pull origin main   # Primero sincronizas
 git add .              # Agregas cambios
 git commit -m "Descripción de cambios"
 git push origin main   # Luego subes tus cambios
-
 */

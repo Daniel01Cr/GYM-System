@@ -13,8 +13,8 @@ exports.getMembresias = async (req, res) => {
 // Obtener membresía por ID 
 exports.getMembresiaById = async (req, res) => {
   try {
-    const { ID_MEMBRESIA } = req.params;
-    const [rows] = await db.query('SELECT ID_MEMBRESIA, NOMBRE_MEMBRESIA, DURACION_DIAS, PRECIO FROM MEMBRESIA WHERE ID_MEMBRESIA = ?', [ID_MEMBRESIA]);
+    const { id } = req.params;
+    const [rows] = await db.query('SELECT ID_MEMBRESIA, NOMBRE_MEMBRESIA, DURACION_DIAS, PRECIO FROM MEMBRESIA WHERE ID_MEMBRESIA = ?', [id]);
     if (rows.length === 0) {
       return res.status(404).json({ message: 'Membresía no encontrada' });
     }
@@ -41,11 +41,11 @@ exports.createMembresia = async (req, res) => {
 // Actualizar membresía
 exports.updateMembresia = async (req, res) => {
   try {
-    const { ID_MEMBRESIA } = req.params;
+    const { id } = req.params;
     const { NOMBRE_MEMBRESIA, DURACION_DIAS, PRECIO } = req.body;
     const [rows] = await db.query(
       'UPDATE MEMBRESIA SET NOMBRE_MEMBRESIA=?, DURACION_DIAS=?, PRECIO=? WHERE ID_MEMBRESIA=?',
-      [NOMBRE_MEMBRESIA, DURACION_DIAS, PRECIO, ID_MEMBRESIA]
+      [NOMBRE_MEMBRESIA, DURACION_DIAS, PRECIO, id]
     );
     if (rows.affectedRows === 0) {
       return res.status(404).json({ message: 'Membresía no encontrada' });
@@ -59,10 +59,10 @@ exports.updateMembresia = async (req, res) => {
 // Eliminar membresía
 exports.deleteMembresia = async (req, res) => {
   try {
-    const { ID_MEMBRESIA } = req.params;
+    const { id } = req.params;
     const [rows] = await db.query(
       'DELETE FROM MEMBRESIA WHERE ID_MEMBRESIA=?',
-      [ID_MEMBRESIA]
+      [id]
     );
     if (rows.affectedRows === 0) {
       return res.status(404).json({ message: 'Membresía no encontrada' });

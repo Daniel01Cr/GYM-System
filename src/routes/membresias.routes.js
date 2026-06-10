@@ -3,9 +3,9 @@ const router = express.Router();
 const membresiasController = require('../controllers/membresias.controller');
 
 router.get('/', membresiasController.getMembresias);
-router.get('/:ID_MEMBRESIA', membresiasController.getMembresiaById);
+router.get('/:id', membresiasController.getMembresiaById);
 router.post('/', membresiasController.createMembresia);
-router.put('/:ID_MEMBRESIA', membresiasController.updateMembresia);
-router.delete('/:ID_MEMBRESIA', membresiasController.deleteMembresia);
+router.put('/:id', membresiasController.updateMembresia);
+router.delete('/:id', membresiasController.deleteMembresia);
 
 module.exports = router;
