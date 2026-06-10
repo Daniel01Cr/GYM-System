@@ -1,23 +1,14 @@
 const express           = require('express');
 const router            = express.Router();
-const usuarioController = require('../controllers/usuario.controller');
+const usuarioController = require('../controllers/usuarios.controller');
+const { verificarToken, soloAdmin } = require('../middlewares/auth.middleware');
 
-// GET    /usuario              → todos los usuarios
-router.get('/',                  usuarioController.getUsuarios);
-
-// GET    /usuario/:id          → usuario por ID
-router.get('/:id',               usuarioController.getUsuarioById);
-
-// POST   /usuario              → crear usuario
-router.post('/',                 usuarioController.createUsuario);
-
-// PUT    /usuario/:id          → actualizar datos (sin contraseña)
-router.put('/:id',               usuarioController.updateUsuario);
-
-// PUT    /usuario/:id/password → cambiar contraseña
-router.put('/:id/password',      usuarioController.updatePassword);
-
-// DELETE /usuario/:id          → eliminar usuario
-router.delete('/:id',            usuarioController.deleteUsuario);
+// Todo lo de usuarios es solo ADMIN
+router.get('/',               verificarToken, soloAdmin, usuarioController.getUsuarios);
+router.get('/:id',            verificarToken, soloAdmin, usuarioController.getUsuarioById);
+router.post('/',              verificarToken, soloAdmin, usuarioController.createUsuario);
+router.put('/:id',            verificarToken, soloAdmin, usuarioController.updateUsuario);
+router.put('/:id/password',   verificarToken,            usuarioController.updatePassword); // cualquier usuario puede cambiar su propia contraseña
+router.delete('/:id',         verificarToken, soloAdmin, usuarioController.deleteUsuario);
 
 module.exports = router;

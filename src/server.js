@@ -10,12 +10,17 @@ app.use(express.json());
 require('./cron/membresias.cron');
 
 // ─── Rutas ───────────────────────────────────────────────────────────────────
+const authRoutes             = require('./routes/auth.routes');
 const clientesRoutes         = require('./routes/clientes.routes');
 const membresiasRoutes       = require('./routes/membresias.routes');
 const clienteMembresiaRoutes = require('./routes/cliente-membresia.routes');
-const facturaRoutes          = require('./routes/factura.routes');
-const usuarioRoutes          = require('./routes/usuario.routes');
+const facturaRoutes          = require('./routes/facturas.routes');
+const usuarioRoutes          = require('./routes/usuarios.routes');
 
+// Pública — no requiere token
+app.use('/auth',              authRoutes);
+
+// Protegidas — cada router aplica verificarToken internamente
 app.use('/cliente',           clientesRoutes);
 app.use('/membresia',         membresiasRoutes);
 app.use('/cliente-membresia', clienteMembresiaRoutes);
@@ -28,10 +33,3 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en puerto ${PORT}`);
 });
-
-/*
-git pull origin main   # Primero sincronizas
-git add .              # Agregas cambios
-git commit -m "Descripción de cambios"
-git push origin main   # Luego subes tus cambios
-*/

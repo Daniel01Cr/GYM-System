@@ -1,11 +1,12 @@
-const express = require('express');
-const router  = express.Router();
+const express                    = require('express');
+const router                     = express.Router();
 const clienteMembresiaController = require('../controllers/cliente-membresia.controller');
+const { verificarToken, soloAdmin } = require('../middlewares/auth.middleware');
 
-// POST /cliente-membresia/asignar
-router.post('/asignar', clienteMembresiaController.asignarMembresia);
+// Check-in → RECEPCION y ADMIN lo necesitan
+router.get('/estado/:id_cliente', verificarToken, clienteMembresiaController.getEstadoMembresia);
 
-// GET /cliente-membresia/estado/:id_cliente
-router.get('/estado/:id_cliente', clienteMembresiaController.getEstadoMembresia);
+// Asignar membresía → solo ADMIN
+router.post('/asignar', verificarToken, soloAdmin, clienteMembresiaController.asignarMembresia);
 
 module.exports = router;
